@@ -6,9 +6,7 @@ from funcoes import *
 import os
 
 '''
-adicionar maçã falsa
-fazer com q quando bata na parede a cobra morra
-ajeitar a função game over que não ta reinicializando o jogo
+quando ta reiniciando , as cores normais nao tao voltando
 '''
 
 pygame.init()
@@ -29,6 +27,9 @@ y_controle = 0
 
 x_maca = randint(40, 600)
 y_maca = randint(50, 430)
+
+x_maca_fake = randint(40, 600)
+y_maca_fake = randint(50, 430)
 
 pontos = 0
 fonte = pygame.font.SysFont('arial', 40, bold=True, italic=True)
@@ -142,9 +143,19 @@ while True:
     cobra = pygame.draw.rect(tela, (cor_cobra[0],cor_cobra[1],cor_cobra[2]), (x_cobra,y_cobra,20,20))
     maca = pygame.draw.rect(tela, (cor_maca[0], cor_maca[1], cor_maca[2]), (x_maca,y_maca,20,20))
     
+    if pontos > 25:
+        maca_fake = pygame.draw.rect(tela, (cor_maca[0], cor_maca[1], cor_maca[2]), (x_maca_fake,y_maca_fake,20,20))
+        if cobra.colliderect(maca_fake):
+            x_maca = randint(40, 600)
+            y_maca = randint(50, 430)
+            x_maca_fake = randint(40, 600)
+            y_maca_fake = randint(50, 430)
+
     if cobra.colliderect(maca):
         x_maca = randint(40, 600)
         y_maca = randint(50, 430)
+        x_maca_fake = randint(40, 600)
+        y_maca_fake = randint(50, 430)
         pontos += 1
         comprimento_inicial = comprimento_inicial + 1
 

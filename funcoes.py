@@ -3,21 +3,20 @@ from pygame.locals import *
 from sys import exit
 from random import randint
 
-pontos = 0
-comprimento_inicial = 5
-x_cobra = 0
-y_cobra = 0
-lista_cabeca = []
-lista_cobra = []
-x_maca = 0
-y_maca = 0
-morreu = True
 branco = [255, 255, 255]
 preto = [0, 0, 0]
+vermelho = [255, 0, 0]
+verde = [0, 255, 0]
 morreu = True
 
-def maca_falsa():
-    pass
+"""def maca_falsa(tela, cor_maca, pontos): # ta dando loop n sei pq
+    x_maca_fake = randint(40, 600)
+    y_maca_fake = randint(50, 430)
+    
+    if pontos > 5:
+        #fazer com que quando a maça seja comida as duas sumam e vice e versa
+        maca_fake = pygame.draw.rect(tela, (cor_maca[0], cor_maca[1], cor_maca[2]), (x_maca_fake,y_maca_fake,20,20))
+"""    
 
 def cobra_falsa():
     pass
@@ -28,11 +27,13 @@ def mudar_cor(pontos, cor_fonte, cor_tela, cor_cobra, cor_maca):
         cor_tela[:] = preto
         cor_cobra[:] = branco
         cor_fonte[:] = branco
+        cor_maca[:] = branco
     if pontos > 30:
-        cor_tela[:]
-        cor_cobra[:]
-        cor_fonte[:]
-        
+        cor_tela[:] = branco
+        cor_cobra[:] = vermelho
+        cor_fonte[:] = preto
+        cor_maca[:] = verde
+
     return cor_fonte, cor_cobra, cor_tela
 
 def reiniciar_jogo(largura, altura):
@@ -49,7 +50,7 @@ def reiniciar_jogo(largura, altura):
 
 
 def game_over(tela, largura, altura):
-    global morreu
+    global morreu # passei um ano pra entender que so faltava declarar morreu como global pra funcionar
     fonte2 = pygame.font.SysFont("arial", 20, True, True)
     mensagem = "Game Over! R para reiniciar o jogo"
     texto_formatado = fonte2.render(mensagem, True, (0,0,0))
