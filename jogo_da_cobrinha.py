@@ -2,11 +2,11 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from random import randint
-from funcoes import *
+from funcoes import mudar_cor
 import os
 
 '''
-quando ta reiniciando , as cores normais nao tao voltando
+ quando ta reiniciando , as cores normais nao tao voltando
 '''
 
 pygame.init()
@@ -59,7 +59,7 @@ def aumenta_cobra(lista_cobra):
         pygame.draw.rect(tela, (cor_cobra[0],cor_cobra[1],cor_cobra[2]), (XeY[0], XeY[1], 20, 20))
 
 def reiniciar_jogo(largura, altura):
-    global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cabeca, lista_cobra, x_maca, y_maca, morreu
+    global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cabeca, lista_cobra, x_maca, y_maca, morreu, cor_fonte, cor_tela, cor_cobra, cor_maca
     pontos = 0
     comprimento_inicial = 5
     x_cobra = largura/2
@@ -68,9 +68,14 @@ def reiniciar_jogo(largura, altura):
     lista_cabeca = []
     x_maca = randint(40, 600)
     y_maca = randint(50, 430)
+    cor_fonte = [0,0,0]
+    cor_tela = [255,255,255]
+    cor_cobra = [0, 255, 0]
+    cor_maca = [255,0,0]
     morreu = False
 
 def game_over(tela, largura, altura):
+    global morreu # passei um ano pra entender que so faltava declarar morreu como global pra funcionar
     fonte2 = pygame.font.SysFont("arial", 20, True, True)
     mensagem = "Game Over! R para reiniciar o jogo"
     texto_formatado = fonte2.render(mensagem, True, (0,0,0))
@@ -136,7 +141,7 @@ while True:
                 else:
                     y_controle = velocidade
                     x_controle = 0
-
+    
     x_cobra = x_cobra + x_controle
     y_cobra = y_cobra + y_controle
         
