@@ -57,6 +57,38 @@ def aumenta_cobra(lista_cobra):
 
         pygame.draw.rect(tela, (cor_cobra[0],cor_cobra[1],cor_cobra[2]), (XeY[0], XeY[1], 20, 20))
 
+def reiniciar_jogo(largura, altura):
+    global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cabeca, lista_cobra, x_maca, y_maca, morreu
+    pontos = 0
+    comprimento_inicial = 5
+    x_cobra = largura/2
+    y_cobra = altura/2
+    lista_cobra = []
+    lista_cabeca = []
+    x_maca = randint(40, 600)
+    y_maca = randint(50, 430)
+    morreu = False
+
+def game_over(tela, largura, altura):
+    fonte2 = pygame.font.SysFont("arial", 20, True, True)
+    mensagem = "Game Over! R para reiniciar o jogo"
+    texto_formatado = fonte2.render(mensagem, True, (0,0,0))
+    ret_texto = texto_formatado.get_rect()
+
+    morreu = True
+    while morreu:
+        tela.fill((255,255,255))
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit
+                exit()
+            if event.type == KEYDOWN:
+                if event.key == K_r:
+                    return reiniciar_jogo(largura, altura)
+        ret_texto.center = (largura//2, altura//2)
+        tela.blit(texto_formatado, ret_texto)
+        pygame.display.update()
+
 while True:
     relogio.tick(30)
     tela.fill((cor_tela[0],cor_tela[1],cor_tela[2]))
@@ -138,6 +170,7 @@ while True:
         game_over(tela, largura, altura)
     if y_cobra > altura:
         game_over(tela, largura, altura)
+
 
     if len(lista_cobra) > comprimento_inicial:
         del lista_cobra[0]

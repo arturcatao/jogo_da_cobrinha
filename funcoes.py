@@ -49,6 +49,7 @@ def reiniciar_jogo(largura, altura):
 
 
 def game_over(tela, largura, altura):
+    global morreu
     fonte2 = pygame.font.SysFont("arial", 20, True, True)
     mensagem = "Game Over! R para reiniciar o jogo"
     texto_formatado = fonte2.render(mensagem, True, (0,0,0))
@@ -63,7 +64,7 @@ def game_over(tela, largura, altura):
                 exit()
             if event.type == KEYDOWN:
                 if event.key == K_r:
-                    reiniciar_jogo(largura, altura)
+                    return reiniciar_jogo(largura, altura)
         ret_texto.center = (largura//2, altura//2)
         tela.blit(texto_formatado, ret_texto)
         pygame.display.update()
