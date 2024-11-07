@@ -2,8 +2,9 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from random import randint
-from funcoes import mudar_cor
+from funcoes import *
 import os
+import shutil
 
 '''
  quando ta reiniciando , as cores normais nao tao voltando
@@ -41,6 +42,7 @@ lista_cobra = []
 comprimento_inicial = 5
 morreu = False
 
+verde = [0, 255, 0]
 vermelho = [255, 0, 0]
 branco = [255, 255, 255]
 preto = [0, 0, 0]
@@ -49,6 +51,10 @@ cor_tela = branco
 cor_cobra = [0, 255, 0]
 cor_maca = vermelho
 
+def limpar_cache():
+    for root, dirs, files in os.walk('.'):
+        if '__pycache__' in dirs:
+            shutil.rmtree(os.path.join(root, '__pycache__'))
 
 def aumenta_cobra(lista_cobra):
     for XeY in lista_cobra:
@@ -75,11 +81,18 @@ def reiniciar_jogo(largura, altura):
     morreu = False
 
 def game_over(tela, largura, altura):
+    limpar_cache()
     global morreu # passei um ano pra entender que so faltava declarar morreu como global pra funcionar
     fonte2 = pygame.font.SysFont("arial", 20, True, True)
-    mensagem = "Game Over! R para reiniciar o jogo"
-    texto_formatado = fonte2.render(mensagem, True, (0,0,0))
-    ret_texto = texto_formatado.get_rect()
+    
+    if pontos < 100:
+        mensagem = "Game Over! R para reiniciar o jogo"
+        texto_formatado = fonte2.render(mensagem, True, (0,0,0))
+        ret_texto = texto_formatado.get_rect()
+    else:
+        mensagem = "Parabens pelo desempenho!!! R para reiniciar o jogo"
+        texto_formatado = fonte2.render(mensagem, True, (0,0,0))
+        ret_texto = texto_formatado.get_rect()
 
     morreu = True
     while morreu:
@@ -185,6 +198,8 @@ while True:
     if y_cobra < 0:
         game_over(tela, largura, altura)
     if y_cobra > altura:
+        game_over(tela, largura, altura)
+    if pontos == 100:
         game_over(tela, largura, altura)
 
 
